@@ -63,7 +63,6 @@ class DetailActivity : ComponentActivity() {
             val pagerState = rememberPagerState(pageCount = {
                 dish?.images?.count() ?: 0
             })
-            var showButton = true
 
             Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
                 TopAppBar({
@@ -73,12 +72,13 @@ class DetailActivity : ComponentActivity() {
                     ) {
                         IconButton(onClick = {
                             val intent = Intent(context, HomeActivity::class.java)
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                             context.startActivity(intent)
 
                         },
                             modifier = Modifier.background(Color.Transparent)
                         ) {
-                            Icon(
+                            Image(
                                 painter = painterResource(R.drawable.ic_launcher),
                                 contentDescription = null,
                             )

@@ -3,6 +3,7 @@ package com.isen.gomez_sanchez.androiderestaurant
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Layout
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -28,6 +29,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
@@ -96,6 +98,7 @@ class MenuActivity : ComponentActivity() {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MenuView(type: DishType) {
+    val context = LocalContext.current
     val category = remember {
         mutableStateOf<Category?>(null)
     }
@@ -106,17 +109,35 @@ fun MenuView(type: DishType) {
         TopAppBar({
             Row(
                 verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween,
                 modifier = Modifier.padding(12.dp)
             ) {
-
-                Image(
-                    painter = painterResource(R.drawable.ic_launcher),
-                    contentDescription = null,
-                    modifier = Modifier.size(60.dp)
-
-                )
+                IconButton(onClick = {
+                    val intent = Intent(context, HomeActivity::class.java)
+                    context.startActivity(intent)
+                }) {
+                    Image(
+                        painter = painterResource(R.drawable.ic_launcher),
+                        contentDescription = null,
+                        modifier = Modifier.size(60.dp)
+                    )
+                }
                 Spacer(modifier = Modifier.width(12.dp))
                 Text(type.title())
+
+                IconButton(onClick = {
+                    val intent = Intent(context, BasketActivity::class.java)
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                    context.startActivity(intent)
+                }
+                ) {
+                    Image(
+                        painter = painterResource(id = R.drawable.chariot),
+                        contentDescription = null,
+                        modifier = Modifier.size(12.dp)
+                    )
+                }
+
             }
 
         })
